@@ -12,7 +12,7 @@ Knowledge Discovery and Data Mining (KDD), 2016
 import argparse
 import numpy as np
 import networkx as nx
-import node2vec
+import src.node2vec as node2vec
 from gensim.models import Word2Vec
 
 def parse_args():
@@ -21,10 +21,10 @@ def parse_args():
 	'''
 	parser = argparse.ArgumentParser(description="Run node2vec.")
 
-	parser.add_argument('--input', nargs='?', default='graph/karate.edgelist',
+	parser.add_argument('--input', nargs='?', default='E:\\node2vec\\node2vec\\graph\\Les.edgelist',
 	                    help='Input graph path')
 
-	parser.add_argument('--output', nargs='?', default='emb/karate.emb',
+	parser.add_argument('--output', nargs='?', default='E:\\node2vec\\node2vec\\emb\\Les1.emb',
 	                    help='Embeddings path')
 
 	parser.add_argument('--dimensions', type=int, default=128,
@@ -48,13 +48,13 @@ def parse_args():
 	parser.add_argument('--p', type=float, default=1,
 	                    help='Return hyperparameter. Default is 1.')
 
-	parser.add_argument('--q', type=float, default=1,
+	parser.add_argument('--q', type=float, default=2,
 	                    help='Inout hyperparameter. Default is 1.')
 
 	parser.add_argument('--weighted', dest='weighted', action='store_true',
 	                    help='Boolean specifying (un)weighted. Default is unweighted.')
 	parser.add_argument('--unweighted', dest='unweighted', action='store_false')
-	parser.set_defaults(weighted=False)
+	parser.set_defaults(weighted=True)
 
 	parser.add_argument('--directed', dest='directed', action='store_true',
 	                    help='Graph is (un)directed. Default is undirected.')
@@ -83,9 +83,10 @@ def learn_embeddings(walks):
 	'''
 	Learn embeddings by optimizing the Skipgram objective using SGD.
 	'''
-	walks = [map(str, walk) for walk in walks]
+	walks = [list(map(str, walk)) for walk in walks]
+
 	model = Word2Vec(walks, size=args.dimensions, window=args.window_size, min_count=0, sg=1, workers=args.workers, iter=args.iter)
-	model.save_word2vec_format(args.output)
+	model.wv.save_word2vec_format(args.output)
 	
 	return
 
@@ -98,6 +99,7 @@ def main(args):
 	G.preprocess_transition_probs()
 	walks = G.simulate_walks(args.num_walks, args.walk_length)
 	learn_embeddings(walks)
+
 
 if __name__ == "__main__":
 	args = parse_args()
