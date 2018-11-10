@@ -10,14 +10,14 @@ from sklearn.manifold import TSNE
 import pandas as pd
 import argparse
 
-f=open("E:\\node2vec\\node2vec\\emb\\Les1.emb",'r')
+f=open("E:\\node2vec\\node2vec\\emb\\Les2.emb",'r')
 alls=f.readlines()
 node_num,feature_num=alls[0].split(' ')
 nodes=[i.split(' ')[0] for i in alls[1:]]
 node2vec_list=[i.split(' ')[1:] for i in alls[1:]]
 node2vecs=np.array(node2vec_list)
 meandistortions=[]
-k=3
+k=6
 kmeans=KMeans(n_clusters=k)
 #聚类
 predic=kmeans.fit(node2vecs)
@@ -45,7 +45,7 @@ print(node2vecs1)
 
 #网络可视化
 nodes_dic=dict(zip(nodes,labels))
-col={0:'y',1:'r',2:'b'}  #3:'g',4:'m',5:'w'
+col={0:'y',1:'r',2:'b',3:'g',4:'m',5:'w'}  #3:'g',4:'m',5:'w'
 
 ft=open("E:\\node2vec\\node2vec\\graph\\Les.edgelist",'r')
 edges=ft.readlines()
@@ -59,7 +59,7 @@ for i in g.nodes():
     colors.append(col[nodes_dic[i]])
 
 nx.draw(g,with_labels=True,style='dashdot',pos=nx.spring_layout(g),node_color=colors)
-plt.savefig("./ba2.png")           #使用matplotlib，保存网络图
+plt.savefig("./ba4.png")           #使用matplotlib，保存网络图
 plt.show()
 # circular_layout：节点在一个圆环上均匀分布
 # random_layout：节点随机分布

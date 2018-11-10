@@ -24,10 +24,10 @@ def parse_args():
 	parser.add_argument('--input', nargs='?', default='E:\\node2vec\\node2vec\\graph\\Les.edgelist',
 	                    help='Input graph path')
 
-	parser.add_argument('--output', nargs='?', default='E:\\node2vec\\node2vec\\emb\\Les1.emb',
+	parser.add_argument('--output', nargs='?', default='E:\\node2vec\\node2vec\\emb\\Les2.emb',
 	                    help='Embeddings path')
 
-	parser.add_argument('--dimensions', type=int, default=128,
+	parser.add_argument('--dimensions', type=int, default=16,
 	                    help='Number of dimensions. Default is 128.')
 
 	parser.add_argument('--walk-length', type=int, default=80,
@@ -48,7 +48,7 @@ def parse_args():
 	parser.add_argument('--p', type=float, default=1,
 	                    help='Return hyperparameter. Default is 1.')
 
-	parser.add_argument('--q', type=float, default=2,
+	parser.add_argument('--q', type=float, default=1,
 	                    help='Inout hyperparameter. Default is 1.')
 
 	parser.add_argument('--weighted', dest='weighted', action='store_true',
