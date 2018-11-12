@@ -66,7 +66,7 @@ def parse_args():
 	parser.add_argument('--undirected', dest='undirected', action='store_false')
 	parser.set_defaults(directed=False)
 
-	parser.add_argument('--label-file', nargs='?',default='E:\\node2vec\\node2vec\\graph\\blogCatalog\\bc_labels.txt',
+	parser.add_argument('--label-file', dest='label',nargs='?',default='E:\\node2vec\\node2vec\\graph\\blogCatalog\\bc_labels.txt',
 						help='The file of node label')
 
 	parser.add_argument('--feature-file',nargs='?', default=False,
@@ -130,12 +130,14 @@ def parse_args():
 
 
 def read_node_label(filename,G):
+
     fin = open(filename, 'r')
     while 1:
         l = fin.readline()
         if l == '':
             break
         vec = l.split()
+        print(vec[0])
         G.nodes[vec[0]]['label'] = vec[1:]
     fin.close()
 
@@ -155,9 +157,9 @@ def read_graph():
 		G = G.to_undirected()
 
 
-	if args.label_file and not args.no_auto_save:
+	if args.label:
 		model = line1.LINE(G, epoch=args.epochs, rep_size=args.dimensions, order=args.order,
-					   label_file=args.label_file, clf_ratio=args.clf_ratio)
+					   label_file=args.label, clf_ratio=args.clf_ratio)
 	else:
 		model = line1.LINE(G, epoch=args.epochs,
 					   rep_size=args.dimensions, order=args.order)
@@ -166,7 +168,7 @@ def read_graph():
 	model.save_embeddings(args.output)
 
 	vectors = model.vectors
-	X, Y = read_node_label(args.label-file,G)
+	X, Y = read_node_label(args.label,G) #dest给变量起名字
 	print("Training classifier using {:.2f}% nodes...".format(args.clf_ratio * 100))
 	clf = Classifier(vectors=vectors, clf=LogisticRegression())
 	clf.split_train_evaluate(X, Y, args.clf_ratio)
