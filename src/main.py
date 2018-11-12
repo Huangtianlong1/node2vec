@@ -16,6 +16,8 @@ import src.node2vec as node2vec
 from gensim.models import Word2Vec
 import graph.graph1 as gh
 import emb.line1 as line1
+import emb.classify as clfy
+from sklearn.linear_model import LogisticRegression
 
 def parse_args():
 	'''
@@ -129,17 +131,20 @@ def parse_args():
 	return parser.parse_args()
 
 
-def read_node_label(filename,G):
-
+def read_node_label(filename):
     fin = open(filename, 'r')
+    X = []
+    Y = []
     while 1:
         l = fin.readline()
         if l == '':
             break
-        vec = l.split()
-        type(vec[0])
-        G.nodes[vec[0]]['label'] = vec[1:]
+        vec = l.strip().split(' ')
+        X.append(vec[0])
+        Y.append(vec[1:])
     fin.close()
+    return X, Y
+
 
 
 def read_graph():
@@ -168,9 +173,9 @@ def read_graph():
 	model.save_embeddings(args.output)
 
 	vectors = model.vectors
-	X, Y = read_node_label(args.label,G) #dest给变量起名字
+	X, Y = read_node_label(args.label) #dest给变量起名字
 	print("Training classifier using {:.2f}% nodes...".format(args.clf_ratio * 100))
-	clf = Classifier(vectors=vectors, clf=LogisticRegression())
+	clf = clfy.Classifier(vectors=vectors, clf=LogisticRegression())
 	clf.split_train_evaluate(X, Y, args.clf_ratio)
 
 	return G
