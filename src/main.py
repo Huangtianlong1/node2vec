@@ -137,7 +137,7 @@ def read_node_label(filename,G):
         if l == '':
             break
         vec = l.split()
-        print(vec[0])
+        type(vec[0])
         G.nodes[vec[0]]['label'] = vec[1:]
     fin.close()
 
