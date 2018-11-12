@@ -130,9 +130,7 @@ class _LINE(object):
 		table_size = 1e8
 		power = 0.75
 		numNodes = self.node_size
-
 		print("Pre-procesing for non-uniform negative sampling!")
-		print(numNodes)
 		node_degree = np.zeros(numNodes)  # out degree
 		nodes=list(self.g.nodes())
 		nodes_index=[]
@@ -206,13 +204,10 @@ class _LINE(object):
 		nodes = list(self.g.nodes())
 		look_back=[]
 		look_back =list(map(str,nodes))
-		print(type(look_back[1]))
-		print(np.array(embeddings).shape)
+
 		for i, embedding in enumerate(embeddings):
-			print("i")
-			print(i)
 			vectors[look_back[i]] = embedding
-		print(vectors['4270'])
+
 		return vectors
 
 

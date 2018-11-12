@@ -66,10 +66,10 @@ def parse_args():
 	parser.add_argument('--undirected', dest='undirected', action='store_false')
 	parser.set_defaults(directed=False)
 
-	parser.add_argument('--label-file', default='E:\\node2vec\\node2vec\\graph\\blogCatalog\\bc_labels.txt',
+	parser.add_argument('--label-file', nargs='?',default='E:\\node2vec\\node2vec\\graph\\blogCatalog\\bc_labels.txt',
 						help='The file of node label')
 
-	parser.add_argument('--feature-file', default=False,
+	parser.add_argument('--feature-file',nargs='?', default=False,
 						help='The file of node features')
 
 	parser.add_argument('--graph-format', default='adjlist', choices=['adjlist', 'edgelist'],
@@ -129,7 +129,7 @@ def parse_args():
 	return parser.parse_args()
 
 
-def read_node_label(self, filename):
+def read_node_label(filename):
     fin = open(filename, 'r')
     while 1:
         l = fin.readline()
@@ -166,7 +166,7 @@ def read_graph():
 	model.save_embeddings(args.output)
 
 	vectors = model.vectors
-	X, Y = read_node_label(args.label_file)
+	X, Y = read_node_label(args.label-file)
 	print("Training classifier using {:.2f}% nodes...".format(args.clf_ratio * 100))
 	clf = Classifier(vectors=vectors, clf=LogisticRegression())
 	clf.split_train_evaluate(X, Y, args.clf_ratio)
