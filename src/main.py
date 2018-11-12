@@ -129,14 +129,14 @@ def parse_args():
 	return parser.parse_args()
 
 
-def read_node_label(filename):
+def read_node_label(filename,G):
     fin = open(filename, 'r')
     while 1:
         l = fin.readline()
         if l == '':
             break
         vec = l.split()
-        self.G.nodes[vec[0]]['label'] = vec[1:]
+        G.nodes[vec[0]]['label'] = vec[1:]
     fin.close()
 
 
@@ -166,7 +166,7 @@ def read_graph():
 	model.save_embeddings(args.output)
 
 	vectors = model.vectors
-	X, Y = read_node_label(args.label-file)
+	X, Y = read_node_label(args.label-file,G)
 	print("Training classifier using {:.2f}% nodes...".format(args.clf_ratio * 100))
 	clf = Classifier(vectors=vectors, clf=LogisticRegression())
 	clf.split_train_evaluate(X, Y, args.clf_ratio)
