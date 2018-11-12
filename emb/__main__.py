@@ -1,22 +1,24 @@
 from __future__ import print_function
-import numpy as np
+
+import ast
 import random
+import time
 from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
+
 from sklearn.linear_model import LogisticRegression
-from .graph import *
-from . import node2vec
-from .classify import Classifier, read_node_label
-from . import line1
-from . import tadw
-from .gcn import gcnAPI
-from . import lle
+
+from graph.graph1 import *
+from . import gf
 from . import hope
 from . import lap
-from . import gf
+from . import line1
+from . import lle
+from . import node2vec
 from . import sdne
+from . import tadw
+from .classify import Classifier, read_node_label
+from .gcn import gcnAPI
 from .grarep import GraRep
-import time
-import ast
 
 
 def parse_args():
