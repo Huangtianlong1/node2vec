@@ -69,7 +69,7 @@ def parse_args():
 	parser.add_argument('--label-file', default='E:\\node2vec\\node2vec\\graph\\blogCatalog\\bc_labels.txt',
 						help='The file of node label')
 
-	parser.add_argument('--feature-file', default=True,
+	parser.add_argument('--feature-file', default=False,
 						help='The file of node features')
 
 	parser.add_argument('--graph-format', default='adjlist', choices=['adjlist', 'edgelist'],
@@ -127,6 +127,18 @@ def parse_args():
 						help='a list of numbers of the neuron at each encoder layer, the last number is the ''dimension of the output node representation')
 
 	return parser.parse_args()
+
+
+def read_node_label(self, filename):
+    fin = open(filename, 'r')
+    while 1:
+        l = fin.readline()
+        if l == '':
+            break
+        vec = l.split()
+        self.G.nodes[vec[0]]['label'] = vec[1:]
+    fin.close()
+
 
 def read_graph():
 	'''

@@ -78,7 +78,7 @@ class _LINE(object):
 		node_degree = np.zeros(self.node_size)  # out degree
 		nodes = list(self.g.nodes())
 		nodes_index = []
-		nodes_index = [i - 1 for i in nodes]
+		nodes_index = [i for i in nodes]
 		look_up = dict(zip(nodes, nodes_index))
 
 
@@ -136,7 +136,7 @@ class _LINE(object):
 		node_degree = np.zeros(numNodes)  # out degree
 		nodes=list(self.g.nodes())
 		nodes_index=[]
-		nodes_index=[i-1 for i in nodes]
+		nodes_index=[i for i in nodes]
 		look_up=dict(zip(nodes,nodes_index))
 		# look_up = self.g.look_up_dict
 		for edge in self.g.edges():
@@ -202,9 +202,17 @@ class _LINE(object):
 		vectors = {}
 		embeddings = self.embeddings.eval(session=self.sess)
 		# embeddings = self.sess.run(tf.nn.l2_normalize(self.embeddings.eval(session=self.sess), 1))
-		look_back = self.g.look_back_list
+
+		nodes = list(self.g.nodes())
+		look_back=[]
+		look_back =list(map(str,nodes))
+		print(type(look_back[1]))
+		print(np.array(embeddings).shape)
 		for i, embedding in enumerate(embeddings):
+			print("i")
+			print(i)
 			vectors[look_back[i]] = embedding
+		print(vectors['4270'])
 		return vectors
 
 
