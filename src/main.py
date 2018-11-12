@@ -198,7 +198,7 @@ def main(args):
 	nx_G=read_graph()
 
 
-
+#    nx_G = read_graph()  #node2vec使用
 #使用node2vec
 	# G = node2vec.Graph(nx_G, args.directed, args.p, args.q)
 	# G.preprocess_transition_probs()
